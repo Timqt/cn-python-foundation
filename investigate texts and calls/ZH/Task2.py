@@ -23,3 +23,22 @@ September 2016.".
 如果键不存在于字典内，将此键加入字典，并将它的值设为给定值。
 """
 
+def check_call(call_num, call_time):
+	#This function check if the call inside the dictionary
+	if call_num in total_time:
+		total_time[call_num] += int(call_time)
+	else:
+		total_time[call_num] = int(call_time)
+
+
+total_time = {}
+
+for call in calls:
+	#This loop will check all the talking time
+	check_call(call[0], call[3])
+	check_call(call[1], call[3])
+
+total_time_sr = sorted(total_time.items(), key = lambda d:d[1])
+#sort total time
+
+print("{} spent the longest time, {} seconds, on the phone during September 2016.".format(total_time_sr[-1][0], total_time_sr[-1][1]))

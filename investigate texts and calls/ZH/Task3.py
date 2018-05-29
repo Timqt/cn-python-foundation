@@ -39,3 +39,40 @@ with open('calls.csv', 'r') as f:
 to other fixed lines in Bangalore."
 注意：百分比应包含2位小数。
 """
+
+'''
+First Part
+'''
+
+banga_tels = {}
+
+def banga_dic(pre):
+	# This function is to put the area-code and else put into the dictionary
+	if pre in banga_tels:
+		banga_tels[pre] += 1
+	else:
+		banga_tels[pre] = 1
+
+# This loop check if the tel is called by Bangalore. 
+for call in calls:
+	if '080' in call[0]:
+		if '(' in call[1]:
+			bra_pos = call[1].find(')') #find the position of right bracket
+			banga_dic(call[1][1:bra_pos])
+		elif call[1][0:3] == '140':
+			banga_dic(call[1][0:3])
+		elif ' ' in call[1]:
+			banga_dic(call[1][0:4])
+
+#print the numbers one by one
+print("The numbers called by people in Bangalore have codes:")
+for banga_tel in sorted(banga_tels):
+	print(banga_tel)
+
+'''
+Second Part
+'''
+
+banga_percent = banga_tels['080']/sum(banga_tels.values())
+
+print("%.2f percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore." % (banga_percent*100))
